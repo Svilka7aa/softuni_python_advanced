@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def swapList(list):
     first = list.pop(0)
     last = list.pop(-1)
