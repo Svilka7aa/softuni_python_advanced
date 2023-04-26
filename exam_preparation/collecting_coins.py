@@ -1,3 +1,6 @@
+from math import floor
+
+
 def move(direction, row, col):
     if direction == "left":
         return row, col - 1
@@ -31,7 +34,7 @@ current_row, current_col = 0, 0
 coins_collected = 0
 
 for row in range(size):
-    row_elements = input().split()
+    row_elements = input().split(" ")
     for col in range(size):
         if row_elements[col] == "P":
             current_row, current_col = row, col
@@ -48,7 +51,7 @@ while True:
         current_row, current_col = reposition(current_row, current_col, size)
 
     if matrix[current_row][current_col] == "X":
-        print(f"Game over! You've collected {round(coins_collected / 2)} coins.")
+        print(f"Game over! You've collected {floor(coins_collected / 2)} coins.")
         path.append([current_row, current_col])
         break
 
@@ -56,11 +59,11 @@ while True:
     path.append([current_row, current_col])
 
     if coins_collected >= 100:
-        print(f"You won! You've collected {coins_collected} coins.")
+        print(f"You won! You've collected {floor(coins_collected)} coins.")
         break
 
     direction = input()
 
-print("Your path:")
+print(f"Your path:")
 for i in path:
     print(i)
