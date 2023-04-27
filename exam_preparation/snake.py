@@ -1,4 +1,4 @@
-def move_snake(direction, row, col):
+def move(direction, row, col):
     if direction == "left":
         return row, col - 1
     if direction == "right":
@@ -14,50 +14,56 @@ def is_outside(size, row, col):
 
 
 def b_condition(territory, row, col):
-    position = burrows_positions[0] if territory[row][col] == burrows_positions[1] else burrows_positions[1]
+    position = burrows_position[0] if territory[row][col] == burrows_position[1] else burrows_position[1]
     return position[0], position[1]
-
+#
+#
 
 size = int(input())
+
 territory = []
-snake_row, snake_col = 0, 0
+current_row, current_col = 0, 0
 food_eaten = 0
-burrows_positions = []
+burrows_position = []
 
 for row in range(size):
     row_elements = list(input())
     for col in range(size):
         if row_elements[col] == "S":
-            snake_row, snake_col = row, col
+            current_row, current_col = row, col
         elif row_elements[col] == "B":
-            burrows_positions.append([row, col])
+            burrows_position.append([row, col])
 
     territory.append(row_elements)
 
 direction = input()
-while True:
-    territory[snake_row][snake_col] = "."
-    snake_row, snake_col = move_snake(direction, snake_row, snake_col)
 
-    if is_outside(size, snake_row, snake_col):
+while True:
+    territory[current_row][current_col] = "."
+    current_row, current_col = move(direction, current_row, current_col)
+
+    if is_outside(size, current_row, current_col):
         print("Game over!")
         break
 
-    elif territory[snake_row][snake_col] == "*":
+    elif territory[current_row][current_col] == "*":
         food_eaten += 1
 
-    elif territory[snake_row][snake_col] == "B":
-        territory[snake_row][snake_col] = "."
-        snake_row, snake_col = b_condition(territory, snake_row, snake_col)
+    elif territory[current_row][current_col] == "B":
+        territory[current_row][current_col] = "."
+        current_row, current_col = b_condition(territory, current_row, current_col)
 
-    territory[snake_row][snake_col] = "S"
+    territory[current_row][current_col] = "S"
 
     if food_eaten == 10:
-        print(f"You won! You fed the snake.")
+        print("You won! You fed the snake.")
         break
+
+
 
     direction = input()
 
+
 print(f"Food eaten: {food_eaten}")
 for row in territory:
-    print(*row, sep="")
+    print("".join(row), sep="")
