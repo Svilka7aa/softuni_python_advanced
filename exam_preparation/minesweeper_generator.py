@@ -1,5 +1,5 @@
 def number_creator(mine_field, row, col):
-    moves = [
+    moves =[
         [row, col + 1],
         [row, col - 1],
         [row - 1, col],
@@ -15,19 +15,19 @@ def number_creator(mine_field, row, col):
             mines_count += 1
     return mines_count
 
-
 size = int(input())
 mine_field = []
 
 for row in range(size):
     mine_field.append([0 for x in range(size)])
 
-numbers_mines = int(input())
-for mine in range(numbers_mines):
+number_mines = int(input())
+
+for mine in range(number_mines):
     coordinates = eval(input())
-    row = coordinates[0]
-    col = coordinates[1]
+    row, col = coordinates[0], coordinates[1]
     mine_field[row][col] = "*"
+
 
 for row in range(size):
     for col in range(size):
@@ -37,4 +37,3 @@ for row in range(size):
 
 for row in mine_field:
     print(*row, sep=" ")
-
