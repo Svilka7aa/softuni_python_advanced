@@ -24,51 +24,38 @@ def outside_position(row, col, size):
         return row, size - 1
 
 
-def punish_player(word):
-    final_word = word[:-1]
-
-    return final_word
-
-
-word = input()
-
+string = input()
 size = int(input())
-matrix = []
-player_row, player_col = 0, 0
+field = []
+player_row = 0
+player_col = 0
 
 for row in range(size):
     row_elements = list(input())
     for col in range(size):
         if row_elements[col] == "P":
             player_row, player_col = row, col
-    matrix.append(row_elements)
+    field.append(row_elements)
 
+number_of_commands = int(input())
 
-number_moves = int(input())
-
-for _ in range(number_moves):
-    matrix[player_row][player_col] = "-"
+for i in range(number_of_commands):
     direction = input()
-
+    field[player_row][player_col] = "-"
     player_row, player_col = move(direction, player_row, player_col)
-
 
     if is_outside(player_row, player_col, size):
         player_row, player_col = outside_position(player_row, player_col, size)
-        word = punish_player(word)
-        matrix[player_row][player_col] = "P"
-        break
+        string = string[:-1]
 
-    if matrix[player_row][player_col] != "-":
-        word += matrix[player_row][player_col]
+    if field[player_row][player_col] != "-":
+        string += field[player_row][player_col]
 
-    matrix[player_row][player_col] = "P"
+    field[player_row][player_col] = "P"
 
-print(word)
-for row in matrix:
-    print(*row, sep="")
-
-
+print(string)
+for row in field:
+    print("".join(row), sep="")
 # Hello
 # 4
 # P---
